@@ -1,11 +1,14 @@
+from src.main import index, add
 import pytest
-from src.read_lyrics import delete_empty_lines
 
+def test_index():
+    assert index() == "Hello, world!"
 
-@pytest.mark.parametrize('data, result', [
-    ('first line\n\nsecond line\n', 'first line\nsecond line\n'),
-    ('first line\nsecond line\n', 'first line\nsecond line\n'),
-    ('', '')
+@pytest.mark.parametrize('x, y, result', [
+    (10, 10, 20),
+    (5, 5, 10),
+    (6, 6, 12)
 ])
-def test_delete_empty_lines(data, result):
-    assert delete_empty_lines(data) == result
+def test_add(x, y, result):
+    assert add(x, y) == result
+

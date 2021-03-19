@@ -1,8 +1,10 @@
-from src.main import index, add
+import sample.main
 import pytest
 
+
 def test_index():
-    assert index() == "Hello, world!"
+    assert sample.main.index() == "Hello, world!"
+
 
 @pytest.mark.parametrize('x, y, result', [
     (10, 10, 20),
@@ -10,5 +12,5 @@ def test_index():
     (6, 6, 12)
 ])
 def test_add(x, y, result):
-    assert add(x, y) == result
+    assert sample.main.add(x, y) == result
 

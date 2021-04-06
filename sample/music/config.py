@@ -9,6 +9,10 @@ Server.add_forward("localhost", 57120)
 def check_parameters(song):
     if song.bpm is None:
         song.bpm = random.randrange(85, 96)
+    if song.root is None:
+        song.root = random.choice(["C", "D", "E", "F", "G", "A", "B"])
+    if song.scale is None:
+        song.scale = random.choice(["minor", "major"])
 
 
 def generate_chords_sounds(chords):
@@ -115,7 +119,7 @@ def generate_drums_sounds(n_beats):
     red = drum[ir]
     sar = drum_samples[ir]
     amr = drum_amp[ir]
-    print('Drums:', bom + " " + red)
+    print("Drums:", bom + " " + red)
 
     drums = [
         play(bom + "[ " + red + "]" + bom + red, sample=[sab, sar], amp=[amb, amr]),
@@ -137,12 +141,15 @@ def generate_drums_sounds(n_beats):
 def prepare_song(song):
     # Check parameters
     check_parameters(song)
-    print('Song details')
-    print('Bpm:', song.bpm)
+    print("SONG DETAILS")
+    print("Bpm:", song.bpm)
+    print("Root:", song.root)
+    print("Scale:", song.scale)
 
+    print("\nCHORDS")
     # Get chords and progression
     chords = music.chords.get_chords(song.n_chords, song.progression)
-    print('Chords:', chords)
+    print("Chords:", chords)
 
     # Get music sounds
     chords_sounds = generate_chords_sounds(chords)

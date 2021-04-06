@@ -97,22 +97,22 @@ def start_music(song, chords, others, drums):
 
     parts = song.structure
 
-    print('\nSTRUCTURE')
+    print("\nSTRUCTURE")
     tim = 0
     for part in parts:
-        if part[0] == 'intro':
-            print('intro: ', tim)
+        if part[0] == "intro":
+            print("intro:", tim)
             Clock.future(tim + 3, intro, kwargs={
                 "chords": chords
             })
-        elif part[0] == 'pre_chorus':
-            print('pre_chorus: ', tim)
+        elif part[0] == "pre_chorus":
+            print("pre_chorus:", tim)
             Clock.future(tim + 3, pre_chorus, kwargs={
                 "chords": chords,
                 "bas": others[0]
             })
-        elif part[0] == 'chorus':
-            print('chorus: ', tim)
+        elif part[0] == "chorus":
+            print("chorus:", tim)
             Clock.future(tim, chorus, kwargs={
                 "chords": chords,
                 "bas": others[0],
@@ -120,17 +120,17 @@ def start_music(song, chords, others, drums):
                 "aco2": others[2],
                 "drums": drums
             })
-        elif part[0] == 'verse':
-            print('verse: ', tim)
+        elif part[0] == "verse":
+            print("verse:", tim)
             Clock.future(tim + 3, verse, kwargs={
                 "chords": chords,
                 "aco2": others[2],
             })
         tim = tim + (part[1] * 16)
 
-    print('end: ', tim)
+    print("end:", tim)
     song_time = tim * 60 / song.bpm
-    print('Time:', song_time)
+    print("Time:", song_time)
     time.sleep(song_time + 2)
     Clock.clear()
     exit()

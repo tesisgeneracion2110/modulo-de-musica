@@ -3,9 +3,9 @@ import music.config
 
 song = music.song.Song(
     None,
-    "E",
-    "major",
-    4,
+    None,
+    None,
+    None,
     None,
     2,
     [["intro", 1], ["pre_chorus", 1], ["chorus", 2]]

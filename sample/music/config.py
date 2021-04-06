@@ -10,9 +10,9 @@ def check_parameters(song):
     if song.bpm is None:
         song.bpm = random.randrange(85, 96)
     if song.root is None:
-        song.root = random.choice(["C", "D", "E", "F", "G", "A", "B"])
+        song.root = random.choice(['C', 'D', 'E', 'F', 'G', 'A', 'B'])
     if song.scale is None:
-        song.scale = random.choice(["minor", "major"])
+        song.scale = random.choice(['minor', 'major'])
 
 
 def generate_chords_sounds(chords):
@@ -75,14 +75,16 @@ def generate_other_sounds(chords):
     # Random accompanist 2
     notes_aco2 = PRand(notes_aco)[:8]
     aco_sounds2 = [
+        """
         pads(notes_aco2, amp=[0.3, random.choice([0, 0.3]), random.choice([0, 0.3]), random.choice([0, 0.3])],
              output=2),
         viola(notes_aco2, amp=[0.7, random.choice([0, 0.7]), random.choice([0, 0.7]), random.choice([0, 0.7])],
               output=2),
         feel(notes_aco2, amp=[2.6, random.choice([0, 2.6]), random.choice([0, 2.6]), random.choice([0, 2.6])],
              output=2)
+        """
     ]
-
+    
     bi = random.randrange(len(bass_sounds))
     aai = random.randrange(len(aco_sounds))
     abi = random.randrange(len(aco_sounds2))

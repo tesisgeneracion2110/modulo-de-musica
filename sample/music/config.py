@@ -11,9 +11,9 @@ def check_parameters(song):
     if song.bpm is None:
         song.bpm = random.randrange(85, 96)
     if song.root is None:
-        song.root = secrets.choice(['C', 'D', 'E', 'F', 'G', 'A', 'B'])
+        song.root = secrets.choice(["C", "D", "E", "F", "G", "A", "B"])
     if song.scale is None:
-        song.scale = secrets.choice(['minor', 'major'])
+        song.scale = secrets.choice(["minor", "major"])
 
 
 def generate_chords_sounds(chords):
@@ -33,7 +33,7 @@ def generate_chords_sounds(chords):
     ]
 
     ch_sounds2 = [
-        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
+        pluck(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
         piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.7),
         blip(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.8),
         zap(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=2)
@@ -76,14 +76,9 @@ def generate_other_sounds(chords):
     # Random accompanist 2
     notes_aco2 = PRand(notes_aco)[:8]
     aco_sounds2 = [
-        """
-        pads(notes_aco2, amp=[0.3, random.choice([0, 0.3]), random.choice([0, 0.3]), random.choice([0, 0.3])],
-             output=2),
-        viola(notes_aco2, amp=[0.7, random.choice([0, 0.7]), random.choice([0, 0.7]), random.choice([0, 0.7])],
-              output=2),
-        feel(notes_aco2, amp=[2.6, random.choice([0, 2.6]), random.choice([0, 2.6]), random.choice([0, 2.6])],
-             output=2)
-        """
+        pads(notes_aco2, amp=[0.3, secrets.choice([0, 0.3]), secrets.choice([0, 0.3]), secrets.choice([0, 0.3])]),
+        marimba(notes_aco2, amp=[2.6, secrets.choice([0, 2.6]), secrets.choice([0, 2.6]), secrets.choice([0, 2.6])]),
+        feel(notes_aco2, amp=[2.6, secrets.choice([0, 2.6]), secrets.choice([0, 2.6]), secrets.choice([0, 2.6])])
     ]
 
     bi = random.randrange(len(bass_sounds))
@@ -158,6 +153,8 @@ def prepare_song(song):
     chords_sounds = generate_chords_sounds(chords)
     other_sounds = generate_other_sounds(chords)
     drums_sounds = generate_drums_sounds(song.n_beats)
+    chorus_melody = piano(PRand(6)[:4].stutter(4), dur=PDur(PTri(random.randrange(1, 3), random.randrange(5, 7)), 8),
+                          oct=6, output=2)
 
     # Start music
-    music.start.start_music(song, chords_sounds, other_sounds, drums_sounds)
+    music.start.start_music(song, chords_sounds, other_sounds, drums_sounds, chorus_melody)

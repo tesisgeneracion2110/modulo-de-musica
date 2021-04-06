@@ -10,7 +10,7 @@ def check_parameters(song):
     if song.bpm is None:
         song.bpm = random.randrange(85, 96)
     if song.root is None:
-        song.root = random.choice(['C', 'D', 'E', 'F', 'G', 'A', 'B'])
+        song.root = random.choice(['c', 'd', 'e', 'f', 'g', 'a', 'b'])
     if song.scale is None:
         song.scale = random.choice(['minor', 'major'])
 
@@ -84,7 +84,7 @@ def generate_other_sounds(chords):
              output=2)
         """
     ]
-    
+
     bi = random.randrange(len(bass_sounds))
     aai = random.randrange(len(aco_sounds))
     abi = random.randrange(len(aco_sounds2))

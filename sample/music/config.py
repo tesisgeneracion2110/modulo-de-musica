@@ -13,7 +13,7 @@ def check_parameters(song):
     if song.root is None:
         song.root = secrets.choice(['C', 'D', 'E', 'F', 'G', 'A', 'B'])
     if song.scale is None:
-        song.scale = random.choice(['minor', 'major'])
+        song.scale = secrets.choice(['minor', 'major'])
 
 
 def generate_chords_sounds(chords):
@@ -26,17 +26,17 @@ def generate_chords_sounds(chords):
     chb = var([cd[0], ca[0], cb[0], cc[0]], 4)
 
     ch_sounds = [
-        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), random.choice([0.25, 0.5, 0.75])), amp=0.6),
-        piano(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), random.choice([0.25, 0.5, 0.75])), amp=0.7),
-        blip(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), random.choice([0.25, 0.5])), amp=0.8),
-        zap(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), random.choice([0.25, 0.5])), amp=2)
+        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
+        piano(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.7),
+        blip(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=0.8),
+        zap(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=2)
     ]
 
     ch_sounds2 = [
-        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), random.choice([0.25, 0.5, 0.75])), amp=0.6),
-        piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), random.choice([0.25, 0.5, 0.75])), amp=0.7),
-        blip(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), random.choice([0.25, 0.5, 0.75])), amp=0.8),
-        zap(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), random.choice([0.25, 0.5, 0.75])), amp=2)
+        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
+        piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.7),
+        blip(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.8),
+        zap(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=2)
     ]
 
     ci = random.randrange(len(ch_sounds))

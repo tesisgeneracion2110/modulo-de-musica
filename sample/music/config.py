@@ -14,6 +14,8 @@ def check_parameters(song):
         song.root = secrets.choice(["C", "D", "E", "F", "G", "A", "B"])
     if song.scale is None:
         song.scale = secrets.choice(["minor", "major"])
+    if song.n_beats is None:
+        song.n_beats = random.randrange(1, 4)
 
 
 def generate_chords_sounds(chords):
@@ -60,7 +62,8 @@ def generate_other_sounds(chords):
     dur_b = random.randrange(1, 6)
 
     bass_sounds = [
-        bass(notes_bass, dur=PDur(dur_b, 16), amp=0.6)
+        bass(notes_bass, dur=PDur(dur_b, 16), amp=0.6),
+        bass(notes_bass, dur=PDur(PRand(5)[:4], 16), amp=0.6)
     ]
 
     # Random accompanist 1
@@ -93,6 +96,8 @@ def generate_other_sounds(chords):
 
 
 def generate_drums_sounds(n_beats):
+    result = []
+
     # Bass
     bas = ["x", "V", "X", "v"]
     bas_samples = [0, 0, 2, 0]
@@ -103,14 +108,9 @@ def generate_drums_sounds(n_beats):
     drum_samples = [0, 0, 2, 4, 1]
     drum_amp = [1.1, 0.4, 0.8, 1.2, 1.9]
 
-    # Low Drummer
-    l_drum = ["P", "R", "T", "g", "t"]
-    l_drum_samples = [0, 0, 0, 2, 1]
-    l_drum_amp = [1, 1, 1, 1, 1]
-
     # Random
-    ib = random.randrange(4)
-    ir = random.randrange(5)
+    ib = random.randrange(len(bas))
+    ir = random.randrange(len(drum))
     bom = bas[ib]
     sab = bas_samples[ib]
     amb = bas_amp[ib]
@@ -121,19 +121,58 @@ def generate_drums_sounds(n_beats):
 
     drums = [
         play(bom + "[ " + red + "]" + bom + red, sample=[sab, sar], amp=[amb, amr]),
-        play(bom + "[-" + red + "]" + bom + red, sample=[sab, sar], amp=[amb, amr]),
+        play(bom + "[-" + red + "]" + bom + red, sample=[sab, sar], amp=[amb, amr])
     ]
 
-    drums1 = [
+    drums_aco = [
         play("- [(-)]([--])"),
         play("- - - - "),
         play(" -  - - ")
     ]
 
     di = random.randrange(len(drums))
-    dai = random.randrange(len(drums1))
+    dai = random.randrange(len(drums_aco))
 
-    return [drums[di], drums1[dai]]
+    result.append(drums[di])
+    result.append(drums_aco[dai])
+
+    if n_beats > 1:
+        # Low Drummer
+        l_drum = ["P", "R", "T", "g", "t"]
+        l_drum_samples = [0, 0, 0, 2, 1]
+        l_drum_amp = [1.1, 0.5, 0.7, 0.6, 1.1]
+
+        il = random.randrange(len(l_drum))
+        rel = l_drum[il]
+        sal = l_drum_samples[il]
+        aml = l_drum_amp[il]
+
+        drums2 = [
+            play(bom + "[ " + rel + "]" + bom + rel, sample=[sab, sal], amp=[amb, aml])
+        ]
+
+        dli = random.randrange(len(drums2))
+        print("Low Drums:", bom + " " + rel)
+
+        result.append(drums2[dli])
+
+        if n_beats > 2:
+
+            drums3 = [
+                play(bom + "[ " + red + "]" + bom + red, sample=[sab, sar], amp=[0, amr]),
+            ]
+
+            dpi = random.randrange(len(drums3))
+            result.append(drums3[dpi])
+
+        else:
+            result.append(drums[di])
+
+    else:
+        result.append(None)
+        result.append(drums[di])
+
+    return result
 
 
 def prepare_song(song):
@@ -143,6 +182,7 @@ def prepare_song(song):
     print("Bpm:", song.bpm)
     print("Root:", song.root)
     print("Scale:", song.scale)
+    print("Beats:", song.n_beats)
 
     print("\nCHORDS")
     # Get chords and progression

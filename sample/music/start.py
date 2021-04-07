@@ -59,14 +59,14 @@ def intro(chords):
     #Clock.future(32, stop)
 
 
-def pre_chorus(chords, bas):
+def pre_chorus(chords, bas, drums):
     stop_aco2()
-    stop_drums()
-    stop_drums_aco()
     start_chords(chords)
     start_bass(bas)
     p6 >> piano(PRand(6)[:4].stutter(4), dur=PDur(PRand(5)[:4], 8), oct=6,
                 output=2)
+    if drums is not None:
+        start_drums(drums)
     #Clock.future(16, prepare_stop)
     #Clock.future(32, stop)
 
@@ -87,7 +87,7 @@ def verse(chords, aco2, drums):
     stop_bass()
     start_chords(chords)
     start_aco2(aco2)
-    start_drums(drums[0])
+    start_drums(drums)
     p6 >> piano(PRand(7)[:4].stutter(4), dur=PRand([0.25, 0.5, 1])[:8], oct=6)
 
 
@@ -122,11 +122,12 @@ def start_music(song, chords, others, drums, chorus_melody):
             print("pre_chorus:", tim)
             Clock.future(tim + 3, pre_chorus, kwargs={
                 "chords": chords,
-                "bas": others[0]
+                "bas": others[0],
+                "drums": drums[2]
             })
         elif part[0] == "chorus":
             print("chorus:", tim)
-            Clock.future(tim, chorus, kwargs={
+            Clock.future(tim + 3, chorus, kwargs={
                 "chords": chords,
                 "bas": others[0],
                 "aco1": others[1],
@@ -139,7 +140,7 @@ def start_music(song, chords, others, drums, chorus_melody):
             Clock.future(tim + 3, verse, kwargs={
                 "chords": chords,
                 "aco2": others[2],
-                "drums": drums
+                "drums": drums[3]
             })
         elif part[0] == "outro":
             print("outro:", tim)

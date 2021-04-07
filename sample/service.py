@@ -5,7 +5,7 @@ song = music.song.Song(
     None,
     None,
     None,
-    None,
+    3,
     None,
     None,
     [

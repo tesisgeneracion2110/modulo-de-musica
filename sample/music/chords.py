@@ -9,19 +9,19 @@ def get_progression(number, pro):
                        random.randrange(1, 8)]
     elif number == 2:
         if pro is None:
-            values = secrets.sample(range(1, 8), 2)
+            values = random.sample(range(1, 8), 2)
             progression = values + values
         else:
             progression = pro + pro
     elif number == 3:
         if pro is None:
-            values = secrets.sample(range(1, 8), 3)
+            values = random.sample(range(1, 8), 3)
             progression = values + [values[random.randrange(3)]]
         else:
             progression = pro + [pro[random.randrange(3)]]
     elif number == 4:
         if pro is None:
-            values = secrets.sample(range(1, 8), 4)
+            values = random.sample(range(1, 8), 4)
             progression = values
         else:
             progression = pro

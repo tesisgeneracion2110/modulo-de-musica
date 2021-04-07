@@ -28,15 +28,15 @@ def generate_chords_sounds(chords):
     chb = var([cd[0], ca[0], cb[0], cc[0]], 4)
 
     ch_sounds = [
-        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
-        piano(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.7),
+        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.5),
+        piano(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
         blip(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=0.8),
         zap(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=2)
     ]
 
     ch_sounds2 = [
-        pluck(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
-        piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.7),
+        pluck(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.5),
+        piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
         blip(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.8),
         zap(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=2)
     ]

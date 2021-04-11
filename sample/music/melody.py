@@ -61,25 +61,20 @@ def voice_melody(song):
     print("Durations:", durations)
     print("Times:", times)
 
-    # degrees = [60, 62, 64, 65, 67, 69, 71, 72]  # MIDI note number
-
-    # times = [0, 1, 2, 2.75, 3.5, 4, 4.5, 5, 5.5, 6, 6.75, 7.5, 8, 9, 10, 10.75]
-    # times = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    tim = 0  # In beats
+    tim = 0
     track = 0
     channel = 0
-    # duration = 1  # In beats
-    tempo = song.bpm  # In BPM
-    volume = 100  # 0-127, as per the MIDI standard
+    tempo = song.bpm
+    volume = 100
 
-    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created automatically)
-    MyMIDI.addProgramChange(0, 0, 0, 0)
-    MyMIDI.addTempo(track, tim, tempo)
+    myMIDI = MIDIFile(1)
+    myMIDI.addProgramChange(0, 0, 0, 0)
+    myMIDI.addTempo(track, tim, tempo)
 
     for i, pitch in enumerate(degrees):
-        MyMIDI.addNote(track, channel, pitch, times[i], durations[i], volume)
+        myMIDI.addNote(track, channel, pitch, times[i], durations[i], volume)
 
     with open("C:/Users/57300/Documents/BatchFoxDot/Recordings/major-scale.mid", "wb") as output_file:
-        MyMIDI.writeFile(output_file)
+        myMIDI.writeFile(output_file)
 
     # chorus_melody = piano(notes, dur=s_dur, output=2)

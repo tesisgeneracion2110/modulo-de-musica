@@ -3,8 +3,16 @@ import random
 import secrets
 import music.chords
 import music.start
+import music.melody
+# import socket
 
 Server.add_forward("localhost", 57120)
+
+"""
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind(('0.0.0.0', 0))
+print(socket.gethostbyname(socket.gethostname()))
+"""
 
 
 def check_parameters(song):
@@ -106,7 +114,7 @@ def generate_drums_sounds(n_beats):
     # Drummer
     drum = ["o", "O", "i", "u", "I"]
     drum_samples = [0, 0, 2, 4, 1]
-    drum_amp = [1.1, 0.4, 0.8, 1.2, 1.9]
+    drum_amp = [1.1, 0.5, 0.8, 1.2, 1.9]
 
     # Random
     ib = random.randrange(len(bas))
@@ -117,7 +125,8 @@ def generate_drums_sounds(n_beats):
     red = drum[ir]
     sar = drum_samples[ir]
     amr = drum_amp[ir]
-    print("Drums:", bom + " " + red)
+    print("\n\nDRUMS:", bom + " " + red)
+    print("Main Drums:", bom + " " + red)
 
     drums = [
         play(bom + "[ " + red + "]" + bom + red, sample=[sab, sar], amp=[amb, amr]),
@@ -140,7 +149,7 @@ def generate_drums_sounds(n_beats):
         # Low Drummer
         l_drum = ["P", "R", "T", "g", "t"]
         l_drum_samples = [0, 0, 0, 2, 1]
-        l_drum_amp = [1.1, 0.5, 0.7, 0.6, 1.1]
+        l_drum_amp = [1, 0.4, 0.6, 0.5, 1]
 
         il = random.randrange(len(l_drum))
         rel = l_drum[il]
@@ -148,7 +157,7 @@ def generate_drums_sounds(n_beats):
         aml = l_drum_amp[il]
 
         drums2 = [
-            play(bom + "[ " + rel + "]" + bom + rel, sample=[sab, sal], amp=[amb, aml])
+            play(bom + "[ " + rel + "]" + bom + rel, sample=[sab, sal], amp=[amb - 0.1, aml])
         ]
 
         dli = random.randrange(len(drums2))
@@ -178,13 +187,13 @@ def generate_drums_sounds(n_beats):
 def prepare_song(song):
     # Check parameters
     check_parameters(song)
-    print("SONG DETAILS")
+    print("\nSONG DETAILS")
     print("Bpm:", song.bpm)
     print("Root:", song.root)
     print("Scale:", song.scale)
     print("Beats:", song.n_beats)
 
-    print("\nCHORDS")
+    print("\n\nCHORDS")
     # Get chords and progression
     chords = music.chords.get_chords(song.n_chords, song.progression)
     print("Chords:", chords)
@@ -193,8 +202,8 @@ def prepare_song(song):
     chords_sounds = generate_chords_sounds(chords)
     other_sounds = generate_other_sounds(chords)
     drums_sounds = generate_drums_sounds(song.n_beats)
-    chorus_melody = piano(PRand(6)[:4].stutter(4), dur=PDur(PTri(random.randrange(1, 3), random.randrange(5, 7)), 8),
-                          oct=6, output=2)
+
+    music.melody.voice_melody(song)
 
     # Start music
-    music.start.start_music(song, chords_sounds, other_sounds, drums_sounds, chorus_melody)
+    music.start.start_music(song, chords_sounds, other_sounds, drums_sounds, None)

@@ -63,8 +63,7 @@ def pre_chorus(chords, bas, drums):
     stop_aco2()
     start_chords(chords)
     start_bass(bas)
-    p6 >> piano(PRand(6)[:4].stutter(4), dur=PDur(PRand(5)[:4], 8), oct=6,
-                output=2)
+    p6 >> piano(PRand(6)[:4].stutter(4), dur=PDur(PRand(5)[:4], 8), oct=6, channel=2, output=2)
     if drums is not None:
         start_drums(drums)
     #Clock.future(16, prepare_stop)
@@ -72,13 +71,13 @@ def pre_chorus(chords, bas, drums):
 
 
 def chorus(chords, bas, aco1, aco2, drums, melody):
+    # p6 >> melody
     start_chords(chords)
     start_bass(bas)
     start_drums(drums[0])
     start_drums_aco(drums[1])
     start_aco1(aco1)
     start_aco2(aco2)
-    p6 >> melody
 
 
 def verse(chords, aco2, drums):
@@ -88,7 +87,7 @@ def verse(chords, aco2, drums):
     start_chords(chords)
     start_aco2(aco2)
     start_drums(drums)
-    p6 >> piano(PRand(7)[:4].stutter(4), dur=PRand([0.25, 0.5, 1])[:8], oct=6)
+    p6 >> piano(PRand(7)[:4].stutter(4), dur=PRand([0.25, 0.5, 1])[:8], oct=6, channel=2, output=2)
 
 
 def outro(chords, melody):
@@ -98,7 +97,7 @@ def outro(chords, melody):
     stop_aco2()
     stop_drums()
     stop_drums_aco()
-    p6 >> melody
+    # p6 >> melody
     #Clock.future(16, prepare_stop)
     #Clock.future(32, stop)
 
@@ -110,7 +109,7 @@ def start_music(song, chords, others, drums, chorus_melody):
 
     parts = song.structure
 
-    print("\nSTRUCTURE")
+    print("\n\nSTRUCTURE")
     tim = 0
     for part in parts:
         if part[0] == "intro":
@@ -154,6 +153,8 @@ def start_music(song, chords, others, drums, chorus_melody):
     song_time = tim * 60 / song.bpm
     print("Time:", song_time)
     time.sleep(song_time + 2)
+    p8 >> donk()
+    time.sleep(4)
     Clock.clear()
     exit()
 

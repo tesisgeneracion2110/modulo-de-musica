@@ -79,16 +79,13 @@ def create_melody(song):
             dur = PDur(PRand(1, 5)[:4], 8)
             melody = generate_melody(song, chorus, dur, tim)
             melodies.append(melody)
-        elif part[0] == "chorus":
+        elif part[0] == "chorus" or part[0] == "outro":
             melody = generate_melody(song, chorus_notes, chorus_dur, tim)
             melodies.append(melody)
         elif part[0] == "verse":
             chorus = crp.sample(range(1, 7), 4)
             dur = PDur(PRand(2, 6)[:4], 8)
             melody = generate_melody(song, chorus, dur, tim)
-            melodies.append(melody)
-        elif part[0] == "outro":
-            melody = generate_melody(song, chorus_notes, chorus_dur, tim)
             melodies.append(melody)
         tim += (part[1] * 16)
 

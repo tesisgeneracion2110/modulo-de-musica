@@ -3,7 +3,7 @@ import random
 import secrets
 import music.chords
 import music.start
-import music.melody
+import music.melody.config
 # import socket
 
 Server.add_forward("localhost", 57120)
@@ -203,7 +203,7 @@ def prepare_song(song):
     other_sounds = generate_other_sounds(chords)
     drums_sounds = generate_drums_sounds(song.n_beats)
 
-    music.melody.voice_melody(song)
+    music.melody.config.voice_melody(song)
 
     # Start music
     # music.start.start_music(song, chords_sounds, other_sounds, drums_sounds, None)

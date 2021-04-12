@@ -35,11 +35,11 @@ def voice_melody(song):
 
     f_degrees = []
 
-    for n in notes:
+    for note in notes:
         if song.scale == "major":
-            f_degrees.append(root + major_scale[n])
+            f_degrees.append(root + major_scale[note])
         else:
-            f_degrees.append(root + minor_scale[n])
+            f_degrees.append(root + minor_scale[note])
 
     times = []
     durations = []
@@ -49,24 +49,24 @@ def voice_melody(song):
 
     durations *= 2
 
-    n = 0
+    i = 0
     for dur in durations:
-        times.append(n)
-        n += dur
+        times.append(i)
+        i += dur
 
     print("Degrees:", f_degrees)
 
-    n = 4
+    i = 4
     j = 0
     degrees = []
 
     for tim in times:
-        if tim < n:
+        if tim < i:
             degrees.append(f_degrees[j])
         else:
             j += 1
             degrees.append(f_degrees[j])
-            n += 4
+            i += 4
 
     print("\n--Output--")
     print("Root:", root)

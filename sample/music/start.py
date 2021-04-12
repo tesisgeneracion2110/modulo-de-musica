@@ -63,15 +63,13 @@ def pre_chorus(chords, bas, drums):
     stop_aco2()
     start_chords(chords)
     start_bass(bas)
-    p6 >> piano(PRand(6)[:4].stutter(4), dur=PDur(PRand(5)[:4], 8), oct=6, channel=2, output=2)
     if drums is not None:
         start_drums(drums)
     #Clock.future(16, prepare_stop)
     #Clock.future(32, stop)
 
 
-def chorus(chords, bas, aco1, aco2, drums, melody):
-    # p6 >> melody
+def chorus(chords, bas, aco1, aco2, drums):
     start_chords(chords)
     start_bass(bas)
     start_drums(drums[0])
@@ -87,22 +85,20 @@ def verse(chords, aco2, drums):
     start_chords(chords)
     start_aco2(aco2)
     start_drums(drums)
-    p6 >> piano(PRand(7)[:4].stutter(4), dur=PRand([0.25, 0.5, 1])[:8], oct=6, channel=2, output=2)
 
 
-def outro(chords, melody):
+def outro(chords):
     start_chords(chords)
     stop_bass()
     stop_aco1()
     stop_aco2()
     stop_drums()
     stop_drums_aco()
-    # p6 >> melody
     #Clock.future(16, prepare_stop)
     #Clock.future(32, stop)
 
 
-def start_music(song, chords, others, drums, chorus_melody):
+def start_music(song, chords, others, drums):
     Clock.bpm = song.bpm
     Scale.default.set(song.scale)
     Root.default.set(song.root)
@@ -131,8 +127,7 @@ def start_music(song, chords, others, drums, chorus_melody):
                 "bas": others[0],
                 "aco1": others[1],
                 "aco2": others[2],
-                "drums": drums,
-                "melody": chorus_melody
+                "drums": drums
             })
         elif part[0] == "verse":
             print("verse:", tim)
@@ -144,10 +139,9 @@ def start_music(song, chords, others, drums, chorus_melody):
         elif part[0] == "outro":
             print("outro:", tim)
             Clock.future(tim + 3, outro, kwargs={
-                "chords": chords,
-                "melody": chorus_melody
+                "chords": chords
             })
-        tim = tim + (part[1] * 16)
+        tim += (part[1] * 16)
 
     print("end:", tim)
     song_time = tim * 60 / song.bpm

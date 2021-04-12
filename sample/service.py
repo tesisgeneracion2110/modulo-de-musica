@@ -12,7 +12,11 @@ song = music.song.Song(
     None,
     None,
     [
-        ["chorus", 1]
+        ["intro", 1],
+        ["pre_chorus", 1],
+        ["chorus", 1],
+        ["verse", 1],
+        ["outro", 1]
     ]
 )
 

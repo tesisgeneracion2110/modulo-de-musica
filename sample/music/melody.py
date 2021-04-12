@@ -1,5 +1,7 @@
 from FoxDot import *
 from midiutil import MIDIFile
+import secrets
+import random
 
 numbers = [
         ["C", 60],
@@ -12,14 +14,18 @@ numbers = [
     ]
 
 major_scale = [0, 2, 4, 5, 7, 9, 11]
+minor_scale = [0, 2, 3, 5, 7, 8, 10]
+
+crp = random.SystemRandom()
 
 
 def voice_melody(song):
-    notes = PRand(6)[:4].stutter(4)
-    s_dur = PDur(PTri(random.randrange(1, 3), random.randrange(4, 6)), 8)
+    notes = crp.sample(range(1, 7), 4)
+    s_dur = PDur(PRand(5)[:4], 8)
     print("\n\nMELODY")
     print("--Input--")
     print("Root:", song.root)
+    print("Scale:", song.scale)
     print("Notes:", notes)
     print("Dur:", s_dur)
 
@@ -27,33 +33,40 @@ def voice_melody(song):
     index = [(index, row.index(song.root)) for index, row in enumerate(numbers) if song.root in row]
     root = numbers[index[0][0]][1]
 
-    degrees = []
+    f_degrees = []
 
     for n in notes:
-        degrees.append(root + major_scale[n])
+        if song.scale == "major":
+            f_degrees.append(root + major_scale[n])
+        else:
+            f_degrees.append(root + minor_scale[n])
 
     times = []
     durations = []
+
+    for dur in s_dur:
+        durations.append(dur)
+
+    durations *= 2
+
     n = 0
-    i = 0
-
-    while n < 16:
+    for dur in durations:
         times.append(n)
-        durations.append(s_dur[i])
-        n = n + s_dur[i]
-        if i + 1 < len(s_dur):
-            i += 1
-        else:
-            i = 0
+        n += dur
 
-    n = len(degrees)
-    i = len(times)
+    print("Degrees:", f_degrees)
+
+    n = 4
     j = 0
+    degrees = []
 
-    while n < i:
-        degrees.append(degrees[j])
-        j += 1
-        n += 1
+    for tim in times:
+        if tim < n:
+            degrees.append(f_degrees[j])
+        else:
+            j += 1
+            degrees.append(f_degrees[j])
+            n += 4
 
     print("\n--Output--")
     print("Root:", root)

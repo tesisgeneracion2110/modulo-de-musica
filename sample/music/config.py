@@ -206,4 +206,4 @@ def prepare_song(song):
     music.melody.voice_melody(song)
 
     # Start music
-    music.start.start_music(song, chords_sounds, other_sounds, drums_sounds, None)
+    # music.start.start_music(song, chords_sounds, other_sounds, drums_sounds, None)

@@ -12,7 +12,6 @@ song = music.song.Song(
     None,
     None,
     [
-        ["intro", 1],
         ["chorus", 1]
     ]
 )

@@ -5,12 +5,12 @@ import music.config
 # from pythonosc import osc_server
 
 song = music.song.Song(
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
+    90,
+    "A",
+    "minor",
+    4,
+    [3, 2, 4, 5],
+    1,
     [
         ["intro", 1],
         ["pre_chorus", 1],

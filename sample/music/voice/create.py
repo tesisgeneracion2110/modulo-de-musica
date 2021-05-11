@@ -1,7 +1,7 @@
 from midiutil import MIDIFile
 
 
-def create_melody(melodies, tempo):
+def create_melody(melodies, tempo, seq):
     tim = 0
     track = 0
     channel = 0
@@ -20,5 +20,5 @@ def create_melody(melodies, tempo):
         for i, pitch in enumerate(melody.degrees):
             my_midi.addNote(track, channel, pitch, melody.times[i], melody.durations[i], volume)
 
-    with open("C:/Users/57300/Documents/BatchFoxDot/Recordings/major-scale.mid", "wb") as output_file:
+    with open("/home/oscar/Documents/records/melody/" + seq + ".mid", "wb") as output_file:
         my_midi.writeFile(output_file)

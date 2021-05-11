@@ -150,6 +150,6 @@ def start_music(song, chords, others, drums):
     p8 >> donk()
     time.sleep(4)
     Clock.clear()
-    exit()
+    return "finish"
 
     Go()

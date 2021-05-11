@@ -1,6 +1,8 @@
 from FoxDot import *
+from oscpy.client import OSCClient
 import random
 import secrets
+import datetime
 import music.chords
 import music.start
 import music.voice.config
@@ -185,6 +187,13 @@ def generate_drums_sounds(n_beats):
 
 
 def prepare_song(song):
+    x = datetime.datetime.now()
+
+    seq = str(x.year) + str(x.month) + str(x.day) + str(x.hour) + str(x.minute)
+
+    osc = OSCClient("127.0.0.1", 57120)
+    osc.send_message(b'/message', [int(seq)])
+
     # Check parameters
     check_parameters(song)
     print("\nSONG DETAILS")
@@ -203,7 +212,12 @@ def prepare_song(song):
     other_sounds = generate_other_sounds(chords)
     drums_sounds = generate_drums_sounds(song.n_beats)
 
-    music.voice.config.create_melody(song)
+    music.voice.config.create_melody(song, seq)
 
     # Start music
-    music.start.start_music(song, chords_sounds, other_sounds, drums_sounds)
+    response = music.start.start_music(song, chords_sounds, other_sounds, drums_sounds)
+
+    return [song.bpm, seq]
+
+    # return "shit"
+

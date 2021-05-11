@@ -63,7 +63,7 @@ def generate_melody(song, notes, s_dur, t):
     return chorus
 
 
-def create_melody(song):
+def create_melody(song, seq):
     melodies = []
 
     # Chorus data
@@ -89,4 +89,4 @@ def create_melody(song):
             melodies.append(melody)
         tim += (part[1] * 16)
 
-    music.voice.create.create_melody(melodies, song.bpm)
+    music.voice.create.create_melody(melodies, song.bpm, seq)

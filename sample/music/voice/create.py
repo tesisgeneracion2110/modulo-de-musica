@@ -20,5 +20,5 @@ def create_melody(melodies, tempo, seq):
         for i, pitch in enumerate(melody.degrees):
             my_midi.addNote(track, channel, pitch, melody.times[i], melody.durations[i], volume)
 
-    with open("/home/oscar/Documents/records/melody/" + seq + ".mid", "wb") as output_file:
+    with open("files/" + seq + ".mid", "wb") as output_file:
         my_midi.writeFile(output_file)

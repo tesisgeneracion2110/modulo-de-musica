@@ -189,7 +189,7 @@ def generate_drums_sounds(n_beats):
 def prepare_song(song):
     x = datetime.datetime.now()
 
-    seq = str(x.year) + str(x.month) + str(x.day) + str(x.hour) + str(x.minute)
+    seq = str(x.month) + str(x.day) + str(x.hour) + str(x.minute) + str(x.second)
 
     osc = OSCClient("127.0.0.1", 57120)
     osc.send_message(b'/message', [int(seq)])
@@ -218,6 +218,4 @@ def prepare_song(song):
     response = music.start.start_music(song, chords_sounds, other_sounds, drums_sounds)
 
     return [song.bpm, seq]
-
-    # return "shit"
 

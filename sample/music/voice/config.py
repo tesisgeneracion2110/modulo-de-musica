@@ -68,7 +68,10 @@ def create_melody(song, seq):
 
     # Chorus data
     chorus_notes = crp.sample(range(1, 7), 4)
-    chorus_dur = PDur(PRand(5)[:4], 8)
+
+    # Admite duraciones de 0.5 a 2
+    chorus_dur = PDur(PRand(1, 4)[:4], 8)
+    print(chorus_dur)
 
     parts = song.structure
     tim = 0
@@ -76,7 +79,7 @@ def create_melody(song, seq):
     for part in parts:
         if part[0] == "pre_chorus":
             chorus = crp.sample(range(1, 7), 4)
-            dur = PDur(PRand(1, 5)[:4], 8)
+            dur = PDur(PRand(2, 5)[:4], 8)
             melody = generate_melody(song, chorus, dur, tim)
             melodies.append(melody)
         elif part[0] == "chorus" or part[0] == "outro":
@@ -84,6 +87,7 @@ def create_melody(song, seq):
             melodies.append(melody)
         elif part[0] == "verse":
             chorus = crp.sample(range(1, 7), 4)
+            # Admite duraciones de 0.25 a 1
             dur = PDur(PRand(2, 6)[:4], 8)
             melody = generate_melody(song, chorus, dur, tim)
             melodies.append(melody)

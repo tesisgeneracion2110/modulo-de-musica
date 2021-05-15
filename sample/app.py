@@ -10,6 +10,17 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 
 app = Flask(__name__)
 
+structures = [
+    [["intro", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1],
+     ["outro", 1]],
+    [["intro", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["chorus", 2],
+     ["outro", 1]],
+    [["chorus", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["chorus", 2],
+     ["outro", 1]],
+    [["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["chorus", 2],
+     ["outro", 1]]
+]
+
 
 def check_values(jsn):
     bpm = jsn['bpm'] if 'bpm' in jsn else None
@@ -35,8 +46,8 @@ def addProduct():
     response = music.config.prepare_song(song)
     print(response)
     return jsonify({"bpm": response[0],
-                    "music": str(response[1]) + ".wav",
-                    "melody": str(response[1]) + ".mid"
+                    "music": "music_" + str(response[1]) + ".wav",
+                    "melody": "melody_" + str(response[1]) + ".mid"
                     })
 
 

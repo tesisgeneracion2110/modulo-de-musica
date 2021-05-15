@@ -9,12 +9,7 @@ import music.voice.config
 # import socket
 
 Server.add_forward("localhost", 57120)
-
-"""
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(('0.0.0.0', 0))
-print(socket.gethostbyname(socket.gethostname()))
-"""
+dlt = 0.15
 
 
 def check_parameters(song):
@@ -38,17 +33,23 @@ def generate_chords_sounds(chords):
     chb = var([cd[0], ca[0], cb[0], cc[0]], 4)
 
     ch_sounds = [
-        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.5),
-        piano(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
-        blip(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=0.8),
-        zap(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=2)
+        pluck(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])),
+              amp=0.5 - dlt),
+        piano(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])),
+              amp=0.6 - dlt),
+        blip(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=0.8 - dlt),
+        zap(cha, dur=PDur(random.randrange(6), 8, random.randrange(3), secrets.choice([0.25, 0.5])), amp=2 - dlt)
     ]
 
     ch_sounds2 = [
-        pluck(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.5),
-        piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.6),
-        blip(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=0.8),
-        zap(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])), amp=2)
+        pluck(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])),
+              amp=0.5 - dlt),
+        piano(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])),
+              amp=0.6 - dlt),
+        blip(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])),
+             amp=0.8 - dlt),
+        zap(chb, dur=PDur(random.randrange(11), 16, random.randrange(3), secrets.choice([0.25, 0.5, 0.75])),
+            amp=2 - dlt)
     ]
 
     ci = random.randrange(len(ch_sounds))
@@ -72,8 +73,8 @@ def generate_other_sounds(chords):
     dur_b = random.randrange(1, 6)
 
     bass_sounds = [
-        bass(notes_bass, dur=PDur(dur_b, 16), amp=0.6),
-        bass(notes_bass, dur=PDur(PRand(5)[:4], 16), amp=0.6)
+        bass(notes_bass, dur=PDur(dur_b, 16), amp=0.6 - dlt),
+        bass(notes_bass, dur=PDur(PRand(5)[:4], 16), amp=0.6 - dlt)
     ]
 
     # Random accompanist 1
@@ -81,17 +82,20 @@ def generate_other_sounds(chords):
     dur = random.randrange(1, 6)
 
     aco_sounds = [
-        charm(notes_aco1, dur=PDur(dur, 8), amp=0.8),
-        prophet(notes_aco1, dur=PDur(dur, 8), amp=0.4),
-        gong(notes_aco1, dur=PDur(dur, 8), amp=1.4)
+        charm(notes_aco1, dur=PDur(dur, 8), amp=0.8 - dlt),
+        prophet(notes_aco1, dur=PDur(dur, 8), amp=0.4 - dlt),
+        gong(notes_aco1, dur=PDur(dur, 8), amp=1.4 - dlt)
     ]
 
     # Random accompanist 2
     notes_aco2 = PRand(notes_aco)[:8]
     aco_sounds2 = [
-        pads(notes_aco2, amp=[0.3, secrets.choice([0, 0.3]), secrets.choice([0, 0.3]), secrets.choice([0, 0.3])]),
-        marimba(notes_aco2, amp=[2.6, secrets.choice([0, 2.6]), secrets.choice([0, 2.6]), secrets.choice([0, 2.6])]),
-        feel(notes_aco2, amp=[2.6, secrets.choice([0, 2.6]), secrets.choice([0, 2.6]), secrets.choice([0, 2.6])])
+        pads(notes_aco2, amp=[0.3 - dlt, secrets.choice([0, 0.3]) - dlt, secrets.choice([0, 0.3]) - dlt,
+                              secrets.choice([0, 0.3]) - dlt]),
+        marimba(notes_aco2, amp=[2.6 - dlt, secrets.choice([0, 2.6]) - dlt, secrets.choice([0, 2.6]) - dlt,
+                                 secrets.choice([0, 2.6]) - dlt]),
+        feel(notes_aco2, amp=[2.6 - dlt, secrets.choice([0, 2.6]) - dlt, secrets.choice([0, 2.6]) - dlt,
+                              secrets.choice([0, 2.6]) - dlt])
     ]
 
     bi = random.randrange(len(bass_sounds))
@@ -116,7 +120,7 @@ def generate_drums_sounds(n_beats):
     # Drummer
     drum = ["o", "O", "i", "u", "I"]
     drum_samples = [0, 0, 2, 4, 1]
-    drum_amp = [1.1, 0.5, 0.8, 1.2, 1.9]
+    drum_amp = [1.1 - dlt, 0.5 - dlt, 0.8 - dlt, 1.2 - dlt, 1.9 - dlt]
 
     # Random
     ib = random.randrange(len(bas))
@@ -151,7 +155,7 @@ def generate_drums_sounds(n_beats):
         # Low Drummer
         l_drum = ["P", "R", "T", "g", "t"]
         l_drum_samples = [0, 0, 0, 2, 1]
-        l_drum_amp = [1, 0.4, 0.6, 0.5, 1]
+        l_drum_amp = [1 - dlt, 0.4 - dlt, 0.6 - dlt, 0.5 - dlt, 1 - dlt]
 
         il = random.randrange(len(l_drum))
         rel = l_drum[il]
@@ -218,4 +222,3 @@ def prepare_song(song):
     response = music.start.start_music(song, chords_sounds, other_sounds, drums_sounds)
 
     return [song.bpm, seq]
-

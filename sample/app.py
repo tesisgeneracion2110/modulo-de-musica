@@ -11,6 +11,18 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 app = Flask(__name__)
 
 
+def check_values(jsn):
+    bpm = jsn['bpm'] if 'bpm' in jsn else None
+    root = jsn['root'] if 'root' in jsn else None
+    scale = jsn['scale'] if 'scale' in jsn else None
+    n_chords = jsn['n_chords'] if 'n_chords' in jsn else None
+    progression = jsn['progression'] if 'progression' in jsn else None
+    n_beats = jsn['n_beats'] if 'n_beats' in jsn else None
+    structure = jsn['structure'] if 'structure' in jsn else [["intro", 1], ["chorus", 1]]
+    song = music.song.Song(bpm, root, scale, n_chords, progression, n_beats, structure)
+    return song
+
+
 @app.route("/music/<path:path>")
 def get_file(path):
     """Download a file."""
@@ -19,15 +31,7 @@ def get_file(path):
 
 @app.route('/music', methods=['POST'])
 def addProduct():
-    song = music.song.Song(
-        request.json['bpm'],
-        request.json['root'],
-        request.json['scale'],
-        request.json['n_chords'],
-        request.json['progression'],
-        request.json['n_beats'],
-        request.json['structure']
-    )
+    song = check_values(request.json)
     response = music.config.prepare_song(song)
     print(response)
     return jsonify({"bpm": response[0],

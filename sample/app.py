@@ -1,6 +1,8 @@
 import music.song
 import music.config
 import os
+import random
+import secrets
 from flask import Flask, jsonify, request, send_from_directory
 
 UPLOAD_DIRECTORY = "files/"
@@ -10,16 +12,25 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 
 app = Flask(__name__)
 
-structures = [
-    [["intro", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1],
-     ["outro", 1]],
-    [["intro", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["chorus", 2],
-     ["outro", 1]],
-    [["chorus", 1], ["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["chorus", 2],
-     ["outro", 1]],
-    [["verse", 1], ["pre_chorus", 1], ["chorus", 1], ["verse", 1], ["chorus", 2],
-     ["outro", 1]]
-]
+
+def generate_structure():
+    default_structures = [
+        ["pre_chorus", 1],
+        ["chorus", 1],
+        ["verse", 1],
+        ["outro", 1]
+    ]
+    structure = []
+
+    i = random.randrange(1, 2)
+    if i == 1:
+        structure.append(["intro", 1])
+
+    parts = random.randint(14, 24)
+    for i in range(parts):
+        structure.append(secrets.choice(default_structures))
+    print(structure)
+    return structure
 
 
 def check_values(jsn):
@@ -29,7 +40,7 @@ def check_values(jsn):
     n_chords = jsn['n_chords'] if 'n_chords' in jsn else None
     progression = jsn['progression'] if 'progression' in jsn else None
     n_beats = jsn['n_beats'] if 'n_beats' in jsn else None
-    structure = jsn['structure'] if 'structure' in jsn else [["intro", 1], ["chorus", 1]]
+    structure = jsn['structure'] if 'structure' in jsn else generate_structure()
     song = music.song.Song(bpm, root, scale, n_chords, progression, n_beats, structure)
     return song
 

@@ -35,6 +35,9 @@ def get_degrees(song, notes):
 def generate_melody(song, notes, s_dur, t):
     f_degrees = get_degrees(song, notes)
 
+    print('notes', notes)
+    print('f_degrees', f_degrees)
+
     times = []
     durations = []
     degrees = []
@@ -59,7 +62,27 @@ def generate_melody(song, notes, s_dur, t):
             degrees.append(f_degrees[j])
             i += 4
 
-    chorus = music.voice.melody.Melody(degrees, durations, times)
+    notes_a = []
+    i = t + 4
+    j = 0
+    for tim in times:
+        if tim < i:
+            p = random.randrange(0, 2)
+            if p == 0:
+                notes_a.append(notes[j])
+            else:
+                notes_a.append(notes[j] - 1)
+        else:
+            j += 1
+            notes_a.append(notes[j])
+            i += 4
+
+    print('notes_a', notes_a)
+    s_degrees = get_degrees(song, notes_a)
+    print('s_degrees', s_degrees)
+    print('degrees  ', degrees)
+
+    chorus = music.voice.melody.Melody(s_degrees, durations, times)
     return chorus
 
 
